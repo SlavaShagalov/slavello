@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  api:
+    image: slavello_api
+    build:
+      context: .
+      dockerfile: ./cmd/api/Dockerfile
+    container_name: slavello_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./configs/api_main.yaml:/configs/api.yaml
+    networks:
+      - slavello-network
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+networks:
+  slavello-network:
+    name: slavello_network
+    driver: bridge
