@@ -10,10 +10,17 @@ import (
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 
+	authDel "github.com/SlavaShagalov/slavello/internal/auth/delivery/http"
+	authUsecase "github.com/SlavaShagalov/slavello/internal/auth/usecase"
+	mw "github.com/SlavaShagalov/slavello/internal/middleware"
 	"github.com/SlavaShagalov/slavello/internal/pkg/config"
+	pHasher "github.com/SlavaShagalov/slavello/internal/pkg/hasher/bcrypt"
 	pLog "github.com/SlavaShagalov/slavello/internal/pkg/log/zap"
 	pStorages "github.com/SlavaShagalov/slavello/internal/pkg/storages"
 	"github.com/SlavaShagalov/slavello/internal/pkg/storages/postgres"
+	sessionsRepository "github.com/SlavaShagalov/slavello/internal/sessions/repository/redis"
+	usersRepository "github.com/SlavaShagalov/slavello/internal/users/repository/postgres"
+	usersUsecase "github.com/SlavaShagalov/slavello/internal/users/usecase"
 )
 
 func main() {
@@ -65,7 +72,24 @@ func main() {
 		logger.Info("Redis client closed")
 	}()
 
+	// ===== Hasher =====
+	hasher := pHasher.New()
+
+	// ===== Repositories =====
+	usersRepo := usersRepository.New(db, logger)
+	sessionsRepo := sessionsRepository.New(redisClient, context.Background(), logger)
+
+	// ===== Usecases =====
+	authUC := authUsecase.New(usersRepo, sessionsRepo, hasher, logger)
+	usersUC := usersUsecase.New(usersRepo)
+
 	router := mux.NewRouter()
+
+	// ===== Middleware =====
+	checkAuth := mw.NewCheckAuth(authUC, logger)
+
+	// ===== Delivery =====
+	authDel.RegisterHandlers(router, authUC, usersUC, logger, checkAuth)
 
 	server := http.Server{
 		Addr:    ":" + viper.GetString(config.ServerPort),
