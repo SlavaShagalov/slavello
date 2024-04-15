@@ -188,34 +188,6 @@ func (repo *repository) PartialUpdate(params *pkgUsers.PartialUpdateParams) (mod
 	return user, nil
 }
 
-const updateAvatarCmd = `
-	UPDATE users
-	SET avatar = $1
-	WHERE id = $2;`
-
-func (repo *repository) UpdateAvatar(id int, avatar string) error {
-	result, err := repo.db.Exec(updateAvatarCmd, avatar, id)
-	if err != nil {
-		repo.log.Error(constants.DBError, zap.Error(err), zap.String("sql", updateAvatarCmd),
-			zap.Int("id", id))
-		return pkgErrors.ErrDb
-	}
-
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		repo.log.Error(constants.DBError, zap.Error(err), zap.String("sql", updateAvatarCmd),
-			zap.Int("id", id))
-		return pkgErrors.ErrDb
-	}
-
-	if rowsAffected == 0 {
-		return pkgErrors.ErrUserNotFound
-	}
-
-	repo.log.Debug("Avatar updated", zap.Int("id", id))
-	return nil
-}
-
 const deleteCmd = `
 	DELETE FROM users 
 	WHERE id = $1;`

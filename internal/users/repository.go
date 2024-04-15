@@ -38,7 +38,6 @@ type Repository interface {
 
 	FullUpdate(params *FullUpdateParams) (models.User, error)
 	PartialUpdate(params *PartialUpdateParams) (models.User, error)
-	UpdateAvatar(id int, avatar string) error
 
 	Delete(id int) error
 

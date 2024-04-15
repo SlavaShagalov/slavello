@@ -1,0 +1,262 @@
+definitions:
+  http.JSONError:
+    properties:
+      error:
+        type: string
+    type: object
+  http.SignInRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  http.SignInResponse:
+    properties:
+      avatar:
+        type: string
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  http.SignUpRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  http.SignUpResponse:
+    properties:
+      avatar:
+        type: string
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  http.partialUpdateRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      username:
+        type: string
+    type: object
+  internal_users_delivery_http.getResponse:
+    properties:
+      avatar:
+        type: string
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /auth/logout:
+    delete:
+      description: Logs out and deletes the authentication cookie.
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Successfully logged out.
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "405":
+          description: Method Not Allowed
+        "500":
+          description: Internal Server Error
+      security:
+      - cookieAuth: []
+      summary: Logs out and deletes the authentication cookie.
+      tags:
+      - auth
+  /auth/signin:
+    post:
+      consumes:
+      - application/json
+      description: Logs in and returns the authentication cookie
+      parameters:
+      - description: Successfully authenticated.
+        in: body
+        name: signInParams
+        required: true
+        schema:
+          $ref: '#/definitions/http.SignInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: successfully auth
+          schema:
+            $ref: '#/definitions/http.SignInResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "405":
+          description: Method Not Allowed
+        "500":
+          description: Internal Server Error
+      summary: Logs in and returns the authentication cookie
+      tags:
+      - auth
+  /auth/signup:
+    post:
+      consumes:
+      - application/json
+      description: Creates new user and returns authentication cookie.
+      parameters:
+      - description: Sign up params.
+        in: body
+        name: signUpParams
+        required: true
+        schema:
+          $ref: '#/definitions/http.SignUpRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully created user.
+          schema:
+            $ref: '#/definitions/http.SignUpResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "405":
+          description: Method Not Allowed
+        "500":
+          description: Internal Server Error
+      summary: Creates new user and returns authentication cookie.
+      tags:
+      - auth
+  /users/{id}:
+    get:
+      description: Returns user with specified id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User data
+          schema:
+            $ref: '#/definitions/internal_users_delivery_http.getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "405":
+          description: Method Not Allowed
+        "500":
+          description: Internal Server Error
+      security:
+      - cookieAuth: []
+      summary: Returns user with specified id
+      tags:
+      - users
+    patch:
+      consumes:
+      - application/json
+      description: Partial update of user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User data to update
+        in: body
+        name: UserUpdateData
+        required: true
+        schema:
+          $ref: '#/definitions/http.partialUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Updated user data
+          schema:
+            $ref: '#/definitions/internal_users_delivery_http.getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.JSONError'
+        "405":
+          description: Method Not Allowed
+        "500":
+          description: Internal Server Error
+      security:
+      - cookieAuth: []
+      summary: Partial update of user
+      tags:
+      - users
+swagger: "2.0"

@@ -20,3 +20,7 @@ service = api
 .PHONY: logs
 logs:
 	docker compose logs -f $(service)
+
+.PHONY: swag
+swag:
+	swag init -g cmd/api/main.go
