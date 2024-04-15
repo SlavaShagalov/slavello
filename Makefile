@@ -5,8 +5,7 @@ build:
 
 .PHONY: up
 up:
-	docker compose -f docker-compose.yml up -d --build api
-	make logs
+	docker compose -f docker-compose.yml up -d --build db sessions-db api
 
 .PHONY: stop
 stop:
