@@ -73,15 +73,6 @@ func (uc *usecase) PartialUpdate(params *users.PartialUpdateParams) (models.User
 	return uc.usersRepo.PartialUpdate(params)
 }
 
-func (uc *usecase) UpdateAvatar(id int, imgData []byte, filename string) (*models.User, error) {
-	user, err := uc.usersRepo.Get(id)
-	if err != nil {
-		return nil, err
-	}
-
-	return &user, err
-}
-
 func (uc *usecase) Delete(id int) error {
 	return uc.usersRepo.Delete(id)
 }

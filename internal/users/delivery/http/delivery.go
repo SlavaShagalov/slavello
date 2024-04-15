@@ -1,7 +1,6 @@
 package http
 
 import (
-	"bytes"
 	mw "github.com/SlavaShagalov/slavello/internal/middleware"
 	"github.com/SlavaShagalov/slavello/internal/pkg/constants"
 	pErrors "github.com/SlavaShagalov/slavello/internal/pkg/errors"
@@ -9,7 +8,6 @@ import (
 	pUsers "github.com/SlavaShagalov/slavello/internal/users"
 	"github.com/gorilla/mux"
 	"go.uber.org/zap"
-	"io"
 	"net/http"
 	"strconv"
 )
@@ -29,12 +27,10 @@ func RegisterHandlers(mux *mux.Router, uc pUsers.Usecase, log *zap.Logger, check
 		usersPrefix = "/users"
 		usersPath   = constants.ApiPrefix + usersPrefix
 		userPath    = usersPath + "/{id}"
-		avatarPath  = userPath + "/avatar"
 	)
 
 	mux.HandleFunc(userPath, checkAuth(del.get)).Methods(http.MethodGet)
 	mux.HandleFunc(userPath, checkAuth(del.partialUpdate)).Methods(http.MethodPatch)
-	mux.HandleFunc(avatarPath, checkAuth(del.updateAvatar)).Methods(http.MethodPut)
 }
 
 // get godoc
@@ -132,56 +128,5 @@ func (del *delivery) partialUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response := newGetResponse(&workspace)
-	pHTTP.SendJSON(w, r, http.StatusOK, response)
-}
-
-// updateAvatar godoc
-//
-//	@Summary		Update user avatar
-//	@Description	Update user avatar
-//	@Tags			users
-//	@Accept			mpfd
-//	@Produce		json
-//	@Param			id		path		int			true	"User ID"
-//	@Param			avatar	body		[]byte		true	"Avatar"
-//	@Success		200		{object}	getResponse	"Updated user data"
-//	@Failure		400		{object}	http.JSONError
-//	@Failure		401		{object}	http.JSONError
-//	@Failure		403		{object}	http.JSONError
-//	@Failure		404		{object}	http.JSONError
-//	@Failure		405
-//	@Failure		500
-//	@Router			/users/{id}/avatar [put]
-//
-//	@Security		cookieAuth
-func (del *delivery) updateAvatar(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	userID, err := strconv.Atoi(vars["id"])
-	if err != nil {
-		pHTTP.HandleError(w, r, err)
-		return
-	}
-
-	file, header, err := r.FormFile("avatar")
-	if err != nil {
-		pHTTP.HandleError(w, r, err)
-		return
-
-	}
-
-	buf := bytes.NewBuffer(nil)
-	_, err = io.Copy(buf, file)
-	if err != nil {
-		pHTTP.HandleError(w, r, err)
-		return
-	}
-
-	user, err := del.uc.UpdateAvatar(userID, buf.Bytes(), header.Filename)
-	if err != nil {
-		pHTTP.HandleError(w, r, err)
-		return
-	}
-
-	response := newGetResponse(user)
 	pHTTP.SendJSON(w, r, http.StatusOK, response)
 }
