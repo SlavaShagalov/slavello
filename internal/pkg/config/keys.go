@@ -22,3 +22,9 @@ const (
 	RedisPort     = "REDIS_PORT"
 	RedisPassword = "REDIS_PASSWORD"
 )
+
+// Validation
+const (
+	MinUsernameLen = "MIN_USERNAME_LEN"
+	MaxUsernameLen = "MAX_USERNAME_LEN"
+)

@@ -19,6 +19,7 @@ import (
 	pStorages "github.com/SlavaShagalov/slavello/internal/pkg/storages"
 	"github.com/SlavaShagalov/slavello/internal/pkg/storages/postgres"
 	sessionsRepository "github.com/SlavaShagalov/slavello/internal/sessions/repository/redis"
+	usersDel "github.com/SlavaShagalov/slavello/internal/users/delivery/http"
 	usersRepository "github.com/SlavaShagalov/slavello/internal/users/repository/postgres"
 	usersUsecase "github.com/SlavaShagalov/slavello/internal/users/usecase"
 )
@@ -90,6 +91,7 @@ func main() {
 
 	// ===== Delivery =====
 	authDel.RegisterHandlers(router, authUC, usersUC, logger, checkAuth)
+	usersDel.RegisterHandlers(router, usersUC, logger, checkAuth)
 
 	server := http.Server{
 		Addr:    ":" + viper.GetString(config.ServerPort),

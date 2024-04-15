@@ -2,6 +2,8 @@ package errors
 
 import (
 	"errors"
+	"fmt"
+	"github.com/SlavaShagalov/slavello/internal/pkg/constants"
 )
 
 var (
@@ -11,6 +13,12 @@ var (
 	// Users
 	ErrUserNotFound      = errors.New("user not found")
 	ErrUserAlreadyExists = errors.New("user already exists")
+	ErrTooShortUsername  = fmt.Errorf("username must be at least %d characters",
+		constants.MinUsernameLen)
+	ErrTooLongUsername = fmt.Errorf("username must be no more than %d characters",
+		constants.MaxUsernameLen)
+	ErrEmptyName   = errors.New("name must not be empty")
+	ErrTooLongName = fmt.Errorf("name must be no more than %d characters", constants.MaxNameLen)
 
 	// Auth
 	ErrWrongLoginOrPassword = errors.New("wrong login or password")
