@@ -6,4 +6,8 @@ const (
 
 	MinNameLen = 1
 	MaxNameLen = 60
+
+	MaxListTitleLen = 50
+
+	MaxListDescriptionLen = 200
 )

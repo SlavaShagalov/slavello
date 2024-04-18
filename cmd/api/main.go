@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	boardsRepository "github.com/SlavaShagalov/slavello/internal/boards/repository"
 	"log"
 	"net/http"
 	"os"
@@ -12,6 +13,8 @@ import (
 
 	authDel "github.com/SlavaShagalov/slavello/internal/auth/delivery/http"
 	authUsecase "github.com/SlavaShagalov/slavello/internal/auth/usecase"
+	"github.com/SlavaShagalov/slavello/internal/boards"
+	boardsUsecase "github.com/SlavaShagalov/slavello/internal/boards/usecase"
 	mw "github.com/SlavaShagalov/slavello/internal/middleware"
 	"github.com/SlavaShagalov/slavello/internal/pkg/config"
 	pHasher "github.com/SlavaShagalov/slavello/internal/pkg/hasher/bcrypt"
@@ -19,9 +22,14 @@ import (
 	pStorages "github.com/SlavaShagalov/slavello/internal/pkg/storages"
 	"github.com/SlavaShagalov/slavello/internal/pkg/storages/postgres"
 	sessionsRepository "github.com/SlavaShagalov/slavello/internal/sessions/repository/redis"
+	"github.com/SlavaShagalov/slavello/internal/users"
 	usersDel "github.com/SlavaShagalov/slavello/internal/users/delivery/http"
 	usersRepository "github.com/SlavaShagalov/slavello/internal/users/repository/postgres"
 	usersUsecase "github.com/SlavaShagalov/slavello/internal/users/usecase"
+	"github.com/SlavaShagalov/slavello/internal/workspaces"
+	workspacesDel "github.com/SlavaShagalov/slavello/internal/workspaces/delivery/http"
+	workspacesRepository "github.com/SlavaShagalov/slavello/internal/workspaces/repository/postgres"
+	workspacesUsecase "github.com/SlavaShagalov/slavello/internal/workspaces/usecase"
 )
 
 func main() {
@@ -77,12 +85,20 @@ func main() {
 	hasher := pHasher.New()
 
 	// ===== Repositories =====
-	usersRepo := usersRepository.New(db, logger)
+	var usersRepo users.Repository
+	var workspacesRepo workspaces.Repository
+	var boardsRepo boards.Repository
+	usersRepo = usersRepository.New(db, logger)
+	workspacesRepo = workspacesRepository.New(db, logger)
+	boardsRepo = boardsRepository.New(db, logger)
+
 	sessionsRepo := sessionsRepository.New(redisClient, context.Background(), logger)
 
 	// ===== Usecases =====
 	authUC := authUsecase.New(usersRepo, sessionsRepo, hasher, logger)
 	usersUC := usersUsecase.New(usersRepo)
+	workspacesUC := workspacesUsecase.New(workspacesRepo)
+	boardsUC := boardsUsecase.New(boardsRepo)
 
 	router := mux.NewRouter()
 
@@ -92,6 +108,7 @@ func main() {
 	// ===== Delivery =====
 	authDel.RegisterHandlers(router, authUC, usersUC, logger, checkAuth)
 	usersDel.RegisterHandlers(router, usersUC, logger, checkAuth)
+	workspacesDel.RegisterHandlers(router, workspacesUC, boardsUC, logger, checkAuth)
 
 	server := http.Server{
 		Addr:    ":" + viper.GetString(config.ServerPort),
