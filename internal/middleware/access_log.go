@@ -17,13 +17,6 @@ func NewAccessLog(serverType string, log *zap.Logger) func(handler http.Handler)
 				zap.String("protocol", r.Proto),
 				zap.String("origin", r.Header.Get("Origin")))
 
-			if serverType == "r" && r.Method != http.MethodGet {
-				w.WriteHeader(http.StatusForbidden)
-				w.Write([]byte("Mirror is read-only"))
-				w.WriteHeader(http.StatusForbidden)
-				return
-			}
-
 			handler.ServeHTTP(w, r)
 		})
 	}
