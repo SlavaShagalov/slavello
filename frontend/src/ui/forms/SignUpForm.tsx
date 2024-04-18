@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SuccessBtn from "../buttons/SuccessBtn";
 import FormField from "../fields/FormField";
+import { API_HOST } from "../../constants";
 
-const API_HOST = "http://127.0.0.1:8000";
 const API_REG_URL = API_HOST + "/api/v1/auth/signup";
 
 const SignUpForm: React.FC = () => {
@@ -62,7 +62,7 @@ const SignUpForm: React.FC = () => {
       onSubmit={handleSubmit}
     >
       <div className="mb-4 flex justify-center">
-        <img src="/assets/logo.png" alt="Logo" className="w-24 h-24 rounded-full"/>
+        <img src="/assets/Logo.svg" alt="Logo" className="rounded-lg" />
       </div>
       <div className="mb-4 flex justify-center">
         <label className="text-gray-700 font-bold mb-2">Sign Up</label>
