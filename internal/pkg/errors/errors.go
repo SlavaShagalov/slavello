@@ -20,6 +20,13 @@ var (
 	ErrEmptyName   = errors.New("name must not be empty")
 	ErrTooLongName = fmt.Errorf("name must be no more than %d characters", constants.MaxNameLen)
 
+	// Workspaces
+	ErrWorkspaceNotFound = errors.New("workspace not found")
+
+	// Lists
+	ErrTooLongListTitle       = fmt.Errorf("list title must be no more than %d characters", constants.MaxListTitleLen)
+	ErrTooLongListDescription = fmt.Errorf("list description must be no more than %d characters", constants.MaxListDescriptionLen)
+
 	// Auth
 	ErrWrongLoginOrPassword = errors.New("wrong login or password")
 	ErrGetHashedPassword    = errors.New("get hashed password error")
