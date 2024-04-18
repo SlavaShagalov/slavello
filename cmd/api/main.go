@@ -104,6 +104,7 @@ func main() {
 
 	// ===== Middleware =====
 	checkAuth := mw.NewCheckAuth(authUC, logger)
+	cors := mw.NewCors()
 
 	// ===== Delivery =====
 	authDel.RegisterHandlers(router, authUC, usersUC, logger, checkAuth)
@@ -112,7 +113,7 @@ func main() {
 
 	server := http.Server{
 		Addr:    ":" + viper.GetString(config.ServerPort),
-		Handler: router,
+		Handler: cors(router),
 	}
 
 	// ===== Start =====
