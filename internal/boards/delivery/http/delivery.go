@@ -18,7 +18,7 @@ type delivery struct {
 	log *zap.Logger
 }
 
-func RegisterHandlers(mux *mux.Router, uc pBoards.Usecase, log *zap.Logger, checkAuth mw.Middleware, metrics mw.Middleware) {
+func RegisterHandlers(mux *mux.Router, uc pBoards.Usecase, log *zap.Logger, checkAuth mw.Middleware) {
 	del := delivery{
 		uc:  uc,
 		log: log,
@@ -88,7 +88,7 @@ func (del *delivery) create(w http.ResponseWriter, r *http.Request) {
 		WorkspaceID: workspaceID,
 	}
 
-	board, err := del.uc.Create(ctx, &params)
+	board, err := del.uc.Create(context.Background(), &params)
 	if err != nil {
 		pHTTP.HandleError(w, r, err)
 		return
