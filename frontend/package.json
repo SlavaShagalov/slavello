@@ -20,6 +20,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "up": "npm install && npm run start",
     "start": "PORT=8100 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -58,7 +58,7 @@ services:
     image: node:19
     container_name: slavello_dev_frontend
     working_dir: /code/
-    command: npm run start
+    command: npm run up
     volumes:
       - ./frontend:/code/
     ports:
