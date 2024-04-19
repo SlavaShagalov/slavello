@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { API_HOST } from '../constants';
+import { API_HOST } from '../../constants';
 
 const Navbar: React.FC = () => {
   const defaultData = {

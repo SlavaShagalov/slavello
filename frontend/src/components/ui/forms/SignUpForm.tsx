@@ -1,47 +1,39 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FormField from "../fields/FormField";
+import { useDispatch } from "react-redux";
+
 import SuccessBtn from "../buttons/SuccessBtn";
-import { API_HOST } from "../../constants";
+import FormField from "../fields/FormField";
 
-const API_LOGIN_URL = API_HOST + "/api/v1/auth/signin";
+import { AppDispatch } from "../../../services/state/store";
+import { signUpAsync } from "../../../services/state/user/userSlice";
 
-const SignInForm: React.FC = () => {
+const SignUpForm: React.FC = () => {
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const requestOptions: RequestInit = {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    };
+    console.log("Name:", name);
+    console.log("Username:", username);
+    console.log("Email:", email);
+    console.log("Password:", password);
 
-    fetch(API_LOGIN_URL, requestOptions)
-      .then((response) => {
-        console.log("Status:", response.status);
-        if (response.status === 200) {
-          console.log("Authentication successful");
-          // const from = location.state?.from || '/';
-          // navigate(from);
-          navigate("/workspaces");
-        } else {
-          console.log("Authentication failed");
-        }
-        return response.json();
+    dispatch(
+      signUpAsync({
+        name,
+        username,
+        email,
+        password,
       })
-      .catch((error) => {
-        console.log("error", error);
-      });
+    );
+    navigate("/");
   };
 
   return (
@@ -53,7 +45,15 @@ const SignInForm: React.FC = () => {
         <img src="/assets/Logo.svg" alt="Logo" className="rounded-lg" />
       </div>
       <div className="mb-4 flex justify-center">
-        <label className="text-gray-700 font-bold mb-2">Sign In</label>
+        <label className="text-gray-700 font-bold mb-2">Sign Up</label>
+      </div>
+      <div className="mb-4">
+        <FormField
+          id="name"
+          placeholder="Name"
+          value={name}
+          onChange={(e: any) => setName(e.target.value)}
+        />
       </div>
       <div className="mb-4">
         <FormField
@@ -61,6 +61,15 @@ const SignInForm: React.FC = () => {
           placeholder="Username"
           value={username}
           onChange={(e: any) => setUsername(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <FormField
+          id="email"
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e: any) => setEmail(e.target.value)}
         />
       </div>
       <div className="mb-6">
@@ -74,11 +83,11 @@ const SignInForm: React.FC = () => {
       </div>
       <div>
         <SuccessBtn className="w-full" type="submit">
-          Sign In
+          Sign Up
         </SuccessBtn>
       </div>
     </form>
   );
 };
 
-export default SignInForm;
+export default SignUpForm;
