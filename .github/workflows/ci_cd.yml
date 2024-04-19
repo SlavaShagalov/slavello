@@ -34,7 +34,7 @@ jobs:
           cache: false
 
       - name: Run tests
-        run: echo "Tests completed."
+        run: make unit-test
 
   build:
     runs-on: ubuntu-latest
