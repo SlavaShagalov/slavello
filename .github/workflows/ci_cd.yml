@@ -1,6 +1,7 @@
 name: CI/CD
 
-on: push
+on:
+  push:
 
 jobs:
   lint:
@@ -45,7 +46,7 @@ jobs:
         run: make build
 
   deploy:
-    if: github.event_name == 'workflow_dispatch' # manual
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     needs: [ lint, test, build ]
     steps:
