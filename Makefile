@@ -5,7 +5,13 @@ build:
 
 .PHONY: up
 up:
-	docker compose -f docker-compose.yml up -d --build db sessions-db api
+	docker compose -f docker-compose.yml up -d --build db sessions-db api dev-frontend
+
+.PHONY: deploy
+deploy:
+	git pull
+	make stop
+	make up
 
 .PHONY: stop
 stop:

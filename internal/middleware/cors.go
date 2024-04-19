@@ -7,11 +7,13 @@ import (
 const MainOrigin = "https://slavello.com"
 
 var AllowedOrigins = map[string]struct{}{
-	MainOrigin:              {},
-	"http://localhost":      {},
-	"http://localhost:3000": {},
-	"http://127.0.0.1":      {},
-	"http://127.0.0.1:3000": {},
+	MainOrigin:                   {},
+	"http://localhost":           {},
+	"http://localhost:3000":      {},
+	"http://127.0.0.1":           {},
+	"http://127.0.0.1:3000":      {},
+	"http://127.0.0.1:8100":      {},
+	"http://88.218.249.169:8100": {},
 }
 
 func NewCors() func(handler http.Handler) http.Handler {
