@@ -8,7 +8,7 @@ import BoardService from "../../api/BoardService";
 
 import RectBoard from "./RectBoard";
 import WorkspaceHeader from "./WorkspaceHeader";
-import Navbar from "../../ui/Navbar";
+import Navbar from "../../components/ui/Navbar";
 
 const WorkspacesPage = () => {
   const [data, setData] = useState<Workspaces | null>(null);

@@ -1,20 +1,51 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import AuthProvider from "./components/AuthProvider";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import {
+  SIGNIN_PAGE_URL,
+  SIGNUP_PAGE_URL,
+  WORKSPACES_PAGE_URL,
+} from "./constants";
 
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import WorkspacesPage from "./pages/WorkspacesPage/WorkspacesPage";
 
+const router = createBrowserRouter([
+  {
+    path: SIGNUP_PAGE_URL,
+    element: <SignUpPage />,
+  },
+  {
+    path: SIGNIN_PAGE_URL,
+    element: <SignInPage />,
+  },
+  {
+    path: WORKSPACES_PAGE_URL,
+    element: (
+      <ProtectedRoute>
+        <WorkspacesPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <WorkspacesPage />
+      </ProtectedRoute>
+    ),
+  },
+]);
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/signin" element={<SignInPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/workspaces" element={<WorkspacesPage />} />
-        <Route path="/" element={<WorkspacesPage />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   );
 }
 
