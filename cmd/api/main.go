@@ -34,7 +34,7 @@ import (
 
 func main() {
 	// ===== Logger =====
-	logger := pLog.NewDev()
+	logger := pLog.NewDevelopLogger()
 	defer func() {
 		err := logger.Sync()
 		if err != nil {

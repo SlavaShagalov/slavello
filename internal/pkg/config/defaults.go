@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/SlavaShagalov/slavello/internal/pkg/constants"
 	"github.com/spf13/viper"
 )
 
@@ -21,4 +22,11 @@ func SetDefaultRedisConfig() {
 	viper.SetDefault(RedisHost, "sessions-db")
 	viper.SetDefault(RedisPort, "6379")
 	viper.SetDefault(RedisPassword, "1234")
+}
+
+// Validation
+
+func SetDefaultValidationConfig() {
+	viper.SetDefault(MinUsernameLen, constants.MinUsernameLen)
+	viper.SetDefault(MaxUsernameLen, constants.MaxUsernameLen)
 }

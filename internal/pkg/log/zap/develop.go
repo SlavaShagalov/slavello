@@ -23,7 +23,7 @@ func DevelopConfig() zapcore.EncoderConfig {
 	}
 }
 
-func NewDev() *zap.Logger {
+func NewDevelopLogger() *zap.Logger {
 	consoleCfg := DevelopConfig()
 
 	consoleEncoder := zapcore.NewConsoleEncoder(consoleCfg)
