@@ -12,10 +12,6 @@ import (
 	"go.uber.org/zap"
 )
 
-const (
-	componentName = "Boards Repository"
-)
-
 type repository struct {
 	db  *sql.DB
 	log *zap.Logger
