@@ -35,12 +35,12 @@ func RegisterHandlers(mux *mux.Router, uc pCards.Usecase, log *zap.Logger, check
 	mux.HandleFunc(listCardsPath, checkAuth(del.create)).Methods(http.MethodPost)
 	mux.HandleFunc(listCardsPath, checkAuth(del.listByList)).Methods(http.MethodGet)
 
-	mux.HandleFunc(cardsPath, checkAuth(del.list))).Methods(http.MethodGet).
+	mux.HandleFunc(cardsPath, checkAuth(del.list)).Methods(http.MethodGet).
 		Queries("title", "{title}")
 
-	mux.HandleFunc(cardPath, checkAuth(del.get))).Methods(http.MethodGet)
-	mux.HandleFunc(cardPath, checkAuth(del.partialUpdate))).Methods(http.MethodPatch)
-	mux.HandleFunc(cardPath, checkAuth(del.delete))).Methods(http.MethodDelete)
+	mux.HandleFunc(cardPath, checkAuth(del.get)).Methods(http.MethodGet)
+	mux.HandleFunc(cardPath, checkAuth(del.partialUpdate)).Methods(http.MethodPatch)
+	mux.HandleFunc(cardPath, checkAuth(del.delete)).Methods(http.MethodDelete)
 }
 
 // create godoc
