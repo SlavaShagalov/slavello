@@ -1,3 +1,5 @@
+EASYJSON_PATHS = ./internal/...
+
 # ===== RUN =====
 .PHONY: build
 build:
@@ -5,7 +7,13 @@ build:
 
 .PHONY: up
 up:
-	docker compose -f docker-compose.yml up -d --build db sessions-db api
+	docker compose -f docker-compose.yml up -d --build db sessions-db api dev-frontend
+
+.PHONY: deploy
+deploy:
+	git pull
+	make stop
+	make up
 
 .PHONY: stop
 stop:
@@ -21,6 +29,22 @@ service = api
 logs:
 	docker compose logs -f $(service)
 
+# ===== GENERATORS =====
+
 .PHONY: swag
 swag:
 	swag init -g cmd/api/main.go
+
+.PHONY: mocks
+mocks:
+	./scripts/gen_mocks.sh
+
+.PHONY: easyjson
+easyjson:
+	go generate ${EASYJSON_PATHS}
+
+# ===== TESTS =====
+
+.PHONY: unit-test
+unit-test:
+	go test ./tests/unit/...

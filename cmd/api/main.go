@@ -36,7 +36,7 @@ import (
 
 func main() {
 	// ===== Logger =====
-	logger := pLog.NewDev()
+	logger := pLog.NewDevelopLogger()
 	defer func() {
 		err := logger.Sync()
 		if err != nil {
@@ -96,6 +96,8 @@ func main() {
 
 	sessionsRepo := sessionsRepository.New(redisClient, context.Background(), logger)
 
+	serverType := viper.GetString(config.ServerType)
+
 	// ===== Usecases =====
 	authUC := authUsecase.New(usersRepo, sessionsRepo, hasher, logger)
 	usersUC := usersUsecase.New(usersRepo)
@@ -106,6 +108,8 @@ func main() {
 
 	// ===== Middleware =====
 	checkAuth := mw.NewCheckAuth(authUC, logger)
+	cors := mw.NewCors()
+	accessLog := mw.NewAccessLog(serverType, logger)
 
 	// ===== Delivery =====
 	authDel.RegisterHandlers(router, authUC, usersUC, logger, checkAuth)
@@ -115,7 +119,7 @@ func main() {
 
 	server := http.Server{
 		Addr:    ":" + viper.GetString(config.ServerPort),
-		Handler: router,
+		Handler: accessLog(cors(router)),
 	}
 
 	// ===== Start =====
