@@ -1,7 +1,7 @@
 package http
 
 import (
-	"github.com/SlavaShagalov/my-trello-backend/internal/models"
+	"github.com/SlavaShagalov/slavello/internal/models"
 	"time"
 )
 

@@ -7,8 +7,8 @@ package mocks
 import (
 	reflect "reflect"
 
-	lists "github.com/SlavaShagalov/my-trello-backend/internal/lists"
-	models "github.com/SlavaShagalov/my-trello-backend/internal/models"
+	lists "github.com/SlavaShagalov/slavello/internal/lists"
+	models "github.com/SlavaShagalov/slavello/internal/models"
 	gomock "github.com/golang/mock/gomock"
 )
 

@@ -1,17 +1,33 @@
-package usecase
+package lists
 
 import (
 	pkgLists "github.com/SlavaShagalov/slavello/internal/lists"
 	"github.com/SlavaShagalov/slavello/internal/lists/mocks"
+	listsUsecase "github.com/SlavaShagalov/slavello/internal/lists/usecase"
 	"github.com/SlavaShagalov/slavello/internal/models"
 	pkgErrors "github.com/SlavaShagalov/slavello/internal/pkg/errors"
+	"github.com/SlavaShagalov/slavello/tests/utils/builder"
 	"github.com/golang/mock/gomock"
+	"github.com/ozontech/allure-go/pkg/framework/provider"
+	"github.com/ozontech/allure-go/pkg/framework/suite"
 	"github.com/pkg/errors"
 	"reflect"
 	"testing"
 )
 
-func TestUsecase_Create(t *testing.T) {
+type ListsUsecaseSuite struct {
+	suite.Suite
+
+	listsBuilder *builder.ListBuilder
+}
+
+func (s *ListsUsecaseSuite) BeforeEach(t provider.T) {
+	t.WithNewStep("SetupTest step", func(ctx provider.StepCtx) {})
+
+	s.listsBuilder = builder.NewListBuilder()
+}
+
+func (s *ListsUsecaseSuite) TestCreate(t provider.T) {
 	type fields struct {
 		repo   *mocks.MockRepository
 		params *pkgLists.CreateParams
@@ -34,15 +50,20 @@ func TestUsecase_Create(t *testing.T) {
 				Title:   "MathStat",
 				BoardID: 27,
 			},
-			list: models.List{ID: 21, BoardID: 27, Title: "MathStat", Position: 41},
-			err:  nil,
+			list: s.listsBuilder.
+				WithID(21).
+				WithBoardID(27).
+				WithTitle("MathStat").
+				WithPosition(41).
+				Build(),
+			err: nil,
 		},
 		"board not found": {
 			prepare: func(f *fields) {
 				f.repo.EXPECT().Create(f.params).Return(*f.list, pkgErrors.ErrBoardNotFound)
 			},
 			params: &pkgLists.CreateParams{Title: "MathStat", BoardID: 27},
-			list:   models.List{},
+			list:   s.listsBuilder.Build(),
 			err:    pkgErrors.ErrBoardNotFound,
 		},
 		"storages error": {
@@ -50,14 +71,14 @@ func TestUsecase_Create(t *testing.T) {
 				f.repo.EXPECT().Create(f.params).Return(*f.list, pkgErrors.ErrDb)
 			},
 			params: &pkgLists.CreateParams{Title: "MathStat", BoardID: 27},
-			list:   models.List{},
+			list:   s.listsBuilder.Build(),
 			err:    pkgErrors.ErrDb,
 		},
 	}
 
 	for name, test := range tests {
 		test := test
-		t.Run(name, func(t *testing.T) {
+		t.Run(name, func(t provider.T) {
 			t.Parallel()
 
 			ctrl := gomock.NewController(t)
@@ -68,7 +89,7 @@ func TestUsecase_Create(t *testing.T) {
 				test.prepare(&f)
 			}
 
-			uc := New(f.repo)
+			uc := listsUsecase.New(f.repo)
 			list, err := uc.Create(test.params)
 			if !errors.Is(err, test.err) {
 				t.Errorf("\nExpected: %s\nGot: %s", test.err, err)
@@ -80,7 +101,7 @@ func TestUsecase_Create(t *testing.T) {
 	}
 }
 
-func TestUsecase_List(t *testing.T) {
+func (s *ListsUsecaseSuite) TestList(t provider.T) {
 	type fields struct {
 		repo    *mocks.MockRepository
 		boardID int
@@ -101,9 +122,24 @@ func TestUsecase_List(t *testing.T) {
 			},
 			boardID: 27,
 			lists: []models.List{
-				{ID: 21, BoardID: 27, Title: "MathStat", Position: 41},
-				{ID: 22, BoardID: 27, Title: "Software Design", Position: 42},
-				{ID: 23, BoardID: 27, Title: "Operating Systems", Position: 43},
+				s.listsBuilder.
+					WithID(21).
+					WithBoardID(27).
+					WithTitle("MathStat").
+					WithPosition(41).
+					Build(),
+				s.listsBuilder.
+					WithID(22).
+					WithBoardID(27).
+					WithTitle("Software Design").
+					WithPosition(42).
+					Build(),
+				s.listsBuilder.
+					WithID(23).
+					WithBoardID(27).
+					WithTitle("Operating Systems").
+					WithPosition(43).
+					Build(),
 			},
 			err: nil,
 		},
@@ -135,7 +171,7 @@ func TestUsecase_List(t *testing.T) {
 
 	for name, test := range tests {
 		test := test
-		t.Run(name, func(t *testing.T) {
+		t.Run(name, func(t provider.T) {
 			t.Parallel()
 
 			ctrl := gomock.NewController(t)
@@ -146,7 +182,7 @@ func TestUsecase_List(t *testing.T) {
 				test.prepare(&f)
 			}
 
-			serv := New(f.repo)
+			serv := listsUsecase.New(f.repo)
 			lists, err := serv.ListByBoard(test.boardID)
 			if !errors.Is(err, test.err) {
 				t.Errorf("\nExpected: %s\nGot: %s", test.err, err)
@@ -158,7 +194,7 @@ func TestUsecase_List(t *testing.T) {
 	}
 }
 
-func TestUsecase_Get(t *testing.T) {
+func (s *ListsUsecaseSuite) TestGet(t provider.T) {
 	type fields struct {
 		repo *mocks.MockRepository
 		id   int
@@ -177,31 +213,36 @@ func TestUsecase_Get(t *testing.T) {
 			prepare: func(f *fields) {
 				f.repo.EXPECT().Get(f.id).Return(*f.list, nil)
 			},
-			id:   21,
-			list: models.List{ID: 21, BoardID: 27, Title: "MathStat", Position: 41},
-			err:  nil,
+			id: 21,
+			list: s.listsBuilder.
+				WithID(21).
+				WithBoardID(27).
+				WithTitle("MathStat").
+				WithPosition(41).
+				Build(),
+			err: nil,
 		},
 		"list not found": {
 			prepare: func(f *fields) {
 				f.repo.EXPECT().Get(f.id).Return(*f.list, pkgErrors.ErrListNotFound)
 			},
 			id:   21,
-			list: models.List{},
+			list: s.listsBuilder.Build(),
 			err:  pkgErrors.ErrListNotFound,
 		},
-		"storages error": {
+		"db error": {
 			prepare: func(f *fields) {
 				f.repo.EXPECT().Get(f.id).Return(*f.list, pkgErrors.ErrDb)
 			},
 			id:   21,
-			list: models.List{},
+			list: s.listsBuilder.Build(),
 			err:  pkgErrors.ErrDb,
 		},
 	}
 
 	for name, test := range tests {
 		test := test
-		t.Run(name, func(t *testing.T) {
+		t.Run(name, func(t provider.T) {
 			t.Parallel()
 
 			ctrl := gomock.NewController(t)
@@ -212,7 +253,7 @@ func TestUsecase_Get(t *testing.T) {
 				test.prepare(&f)
 			}
 
-			uc := New(f.repo)
+			uc := listsUsecase.New(f.repo)
 			list, err := uc.Get(test.id)
 			if !errors.Is(err, test.err) {
 				t.Errorf("\nExpected: %s\nGot: %s", test.err, err)
@@ -224,7 +265,7 @@ func TestUsecase_Get(t *testing.T) {
 	}
 }
 
-func TestFullUpdate(t *testing.T) {
+func (s *ListsUsecaseSuite) TestFullUpdate(t provider.T) {
 	type fields struct {
 		repo   *mocks.MockRepository
 		params *pkgLists.FullUpdateParams
@@ -244,14 +285,19 @@ func TestFullUpdate(t *testing.T) {
 				f.repo.EXPECT().FullUpdate(f.params).Return(*f.list, nil)
 			},
 			params: &pkgLists.FullUpdateParams{ID: 21, Title: "MathStat", Position: 41, BoardID: 27},
-			list:   models.List{ID: 21, BoardID: 27, Title: "MathStat", Position: 41},
-			err:    nil,
+			list: s.listsBuilder.
+				WithID(21).
+				WithBoardID(27).
+				WithTitle("MathStat").
+				WithPosition(41).
+				Build(),
+			err: nil,
 		},
 	}
 
 	for name, test := range tests {
 		test := test
-		t.Run(name, func(t *testing.T) {
+		t.Run(name, func(t provider.T) {
 			t.Parallel()
 
 			ctrl := gomock.NewController(t)
@@ -262,7 +308,7 @@ func TestFullUpdate(t *testing.T) {
 				test.prepare(&f)
 			}
 
-			uc := New(f.repo)
+			uc := listsUsecase.New(f.repo)
 			list, err := uc.FullUpdate(test.params)
 			if !errors.Is(err, test.err) {
 				t.Errorf("\nExpected: %s\nGot: %s", test.err, err)
@@ -274,7 +320,7 @@ func TestFullUpdate(t *testing.T) {
 	}
 }
 
-func TestPartialUpdate(t *testing.T) {
+func (s *ListsUsecaseSuite) TestPartialUpdate(t provider.T) {
 	type fields struct {
 		repo   *mocks.MockRepository
 		params *pkgLists.PartialUpdateParams
@@ -302,14 +348,19 @@ func TestPartialUpdate(t *testing.T) {
 				BoardID:        27,
 				UpdateBoardID:  true,
 			},
-			list: models.List{ID: 21, BoardID: 27, Title: "MathStat", Position: 41},
-			err:  nil,
+			list: s.listsBuilder.
+				WithID(21).
+				WithBoardID(27).
+				WithTitle("MathStat").
+				WithPosition(41).
+				Build(),
+			err: nil,
 		},
 	}
 
 	for name, test := range tests {
 		test := test
-		t.Run(name, func(t *testing.T) {
+		t.Run(name, func(t provider.T) {
 			t.Parallel()
 
 			ctrl := gomock.NewController(t)
@@ -320,7 +371,7 @@ func TestPartialUpdate(t *testing.T) {
 				test.prepare(&f)
 			}
 
-			uc := New(f.repo)
+			uc := listsUsecase.New(f.repo)
 			list, err := uc.PartialUpdate(test.params)
 			if !errors.Is(err, test.err) {
 				t.Errorf("\nExpected: %s\nGot: %s", test.err, err)
@@ -332,7 +383,7 @@ func TestPartialUpdate(t *testing.T) {
 	}
 }
 
-func TestUsecase_Delete(t *testing.T) {
+func (s *ListsUsecaseSuite) TestDelete(t provider.T) {
 	type fields struct {
 		repo *mocks.MockRepository
 		id   int
@@ -363,7 +414,7 @@ func TestUsecase_Delete(t *testing.T) {
 
 	for name, test := range tests {
 		test := test
-		t.Run(name, func(t *testing.T) {
+		t.Run(name, func(t provider.T) {
 			t.Parallel()
 
 			ctrl := gomock.NewController(t)
@@ -374,11 +425,15 @@ func TestUsecase_Delete(t *testing.T) {
 				test.prepare(&f)
 			}
 
-			uc := New(f.repo)
+			uc := listsUsecase.New(f.repo)
 			err := uc.Delete(test.id)
 			if !errors.Is(err, test.err) {
 				t.Errorf("\nExpected: %s\nGot: %s", test.err, err)
 			}
 		})
 	}
+}
+
+func TestSuiteRunner(t *testing.T) {
+	suite.RunSuite(t, new(ListsUsecaseSuite))
 }
