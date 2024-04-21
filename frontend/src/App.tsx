@@ -17,6 +17,7 @@ import SignInPage from "./pages/SignInPage";
 import WorkspacesPage from "./pages/WorkspacesPage/WorkspacesPage";
 import BoardPage from "./pages/BoardPage/BoardPage";
 import SettingsPage from "./pages/SettingsPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
         <WorkspacesPage />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
 
