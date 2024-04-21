@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	boardsRepository "github.com/SlavaShagalov/slavello/internal/boards/repository"
+	"github.com/SlavaShagalov/slavello/internal/cards"
 	"github.com/SlavaShagalov/slavello/internal/pkg/config"
 	"log"
 	"net/http"
@@ -17,6 +18,9 @@ import (
 	"github.com/SlavaShagalov/slavello/internal/boards"
 	boardsDel "github.com/SlavaShagalov/slavello/internal/boards/delivery/http"
 	boardsUsecase "github.com/SlavaShagalov/slavello/internal/boards/usecase"
+	cardsDel "github.com/SlavaShagalov/slavello/internal/cards/delivery/http"
+	cardsRepository "github.com/SlavaShagalov/slavello/internal/cards/repository/postgres"
+	cardsUsecase "github.com/SlavaShagalov/slavello/internal/cards/usecase"
 	mw "github.com/SlavaShagalov/slavello/internal/middleware"
 	pHasher "github.com/SlavaShagalov/slavello/internal/pkg/hasher/bcrypt"
 	pLog "github.com/SlavaShagalov/slavello/internal/pkg/log/zap"
@@ -90,9 +94,11 @@ func main() {
 	var usersRepo users.Repository
 	var workspacesRepo workspaces.Repository
 	var boardsRepo boards.Repository
+	var cardsRepo cards.Repository
 	usersRepo = usersRepository.New(db, logger)
 	workspacesRepo = workspacesRepository.New(db, logger)
 	boardsRepo = boardsRepository.New(db, logger)
+	cardsRepo = cardsRepository.New(db, logger)
 
 	sessionsRepo := sessionsRepository.New(redisClient, context.Background(), logger)
 
@@ -103,6 +109,7 @@ func main() {
 	usersUC := usersUsecase.New(usersRepo)
 	workspacesUC := workspacesUsecase.New(workspacesRepo)
 	boardsUC := boardsUsecase.New(boardsRepo)
+	cardsUC := cardsUsecase.New(cardsRepo)
 
 	router := mux.NewRouter()
 
@@ -115,6 +122,7 @@ func main() {
 	authDel.RegisterHandlers(router, authUC, usersUC, logger, checkAuth)
 	usersDel.RegisterHandlers(router, usersUC, logger, checkAuth)
 	workspacesDel.RegisterHandlers(router, workspacesUC, boardsUC, logger, checkAuth)
+	cardsDel.RegisterHandlers(router, cardsUC, logger, checkAuth)
 	boardsDel.RegisterHandlers(router, boardsUC, logger, checkAuth)
 
 	server := http.Server{

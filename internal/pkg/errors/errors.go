@@ -27,8 +27,12 @@ var (
 	ErrBoardNotFound = errors.New("board not found")
 
 	// Lists
+	ErrListNotFound           = errors.New("list not found")
 	ErrTooLongListTitle       = fmt.Errorf("list title must be no more than %d characters", constants.MaxListTitleLen)
 	ErrTooLongListDescription = fmt.Errorf("list description must be no more than %d characters", constants.MaxListDescriptionLen)
+
+	// Cards
+	ErrCardNotFound = errors.New("card not found")
 
 	// Auth
 	ErrWrongLoginOrPassword = errors.New("wrong login or password")
