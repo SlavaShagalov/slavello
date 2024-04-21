@@ -5,6 +5,7 @@ import AuthProvider from "./components/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import {
+  BOARD_PAGE_URL,
   SIGNIN_PAGE_URL,
   SIGNUP_PAGE_URL,
   WORKSPACES_PAGE_URL,
@@ -13,6 +14,7 @@ import {
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import WorkspacesPage from "./pages/WorkspacesPage/WorkspacesPage";
+import BoardPage from "./pages/BoardPage/BoardPage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <WorkspacesPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: BOARD_PAGE_URL,
+    element: (
+      <ProtectedRoute>
+        <BoardPage />
       </ProtectedRoute>
     ),
   },
