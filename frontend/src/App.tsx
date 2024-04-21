@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import {
   BOARD_PAGE_URL,
+  CARD_PAGE_URL,
   SETTINGS_PAGE_URL,
   SIGNIN_PAGE_URL,
   SIGNUP_PAGE_URL,
@@ -16,6 +17,7 @@ import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import WorkspacesPage from "./pages/WorkspacesPage/WorkspacesPage";
 import BoardPage from "./pages/BoardPage/BoardPage";
+import CardPage from "./pages/CardPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
@@ -41,6 +43,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <BoardPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: CARD_PAGE_URL,
+    element: (
+      <ProtectedRoute>
+        <CardPage />
       </ProtectedRoute>
     ),
   },
