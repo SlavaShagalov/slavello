@@ -4,6 +4,7 @@ import (
 	"context"
 	boardsRepository "github.com/SlavaShagalov/slavello/internal/boards/repository"
 	"github.com/SlavaShagalov/slavello/internal/cards"
+	"github.com/SlavaShagalov/slavello/internal/pkg/config"
 	"log"
 	"net/http"
 	"os"
@@ -15,12 +16,12 @@ import (
 	authDel "github.com/SlavaShagalov/slavello/internal/auth/delivery/http"
 	authUsecase "github.com/SlavaShagalov/slavello/internal/auth/usecase"
 	"github.com/SlavaShagalov/slavello/internal/boards"
+	boardsDel "github.com/SlavaShagalov/slavello/internal/boards/delivery/http"
 	boardsUsecase "github.com/SlavaShagalov/slavello/internal/boards/usecase"
 	cardsDel "github.com/SlavaShagalov/slavello/internal/cards/delivery/http"
 	cardsRepository "github.com/SlavaShagalov/slavello/internal/cards/repository/postgres"
 	cardsUsecase "github.com/SlavaShagalov/slavello/internal/cards/usecase"
 	mw "github.com/SlavaShagalov/slavello/internal/middleware"
-	"github.com/SlavaShagalov/slavello/internal/pkg/config"
 	pHasher "github.com/SlavaShagalov/slavello/internal/pkg/hasher/bcrypt"
 	pLog "github.com/SlavaShagalov/slavello/internal/pkg/log/zap"
 	pStorages "github.com/SlavaShagalov/slavello/internal/pkg/storages"
@@ -28,6 +29,7 @@ import (
 	sessionsRepository "github.com/SlavaShagalov/slavello/internal/sessions/repository/redis"
 	"github.com/SlavaShagalov/slavello/internal/users"
 	usersDel "github.com/SlavaShagalov/slavello/internal/users/delivery/http"
+
 	usersRepository "github.com/SlavaShagalov/slavello/internal/users/repository/postgres"
 	usersUsecase "github.com/SlavaShagalov/slavello/internal/users/usecase"
 	"github.com/SlavaShagalov/slavello/internal/workspaces"
@@ -121,6 +123,7 @@ func main() {
 	usersDel.RegisterHandlers(router, usersUC, logger, checkAuth)
 	workspacesDel.RegisterHandlers(router, workspacesUC, boardsUC, logger, checkAuth)
 	cardsDel.RegisterHandlers(router, cardsUC, logger, checkAuth)
+	boardsDel.RegisterHandlers(router, boardsUC, logger, checkAuth)
 
 	server := http.Server{
 		Addr:    ":" + viper.GetString(config.ServerPort),
