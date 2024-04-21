@@ -4,6 +4,8 @@ import (
 	"context"
 	boardsRepository "github.com/SlavaShagalov/slavello/internal/boards/repository"
 	"github.com/SlavaShagalov/slavello/internal/cards"
+	"github.com/SlavaShagalov/slavello/internal/lists"
+	listsUsecase "github.com/SlavaShagalov/slavello/internal/lists/usecase"
 	"github.com/SlavaShagalov/slavello/internal/pkg/config"
 	"log"
 	"net/http"
@@ -21,6 +23,8 @@ import (
 	cardsDel "github.com/SlavaShagalov/slavello/internal/cards/delivery/http"
 	cardsRepository "github.com/SlavaShagalov/slavello/internal/cards/repository/postgres"
 	cardsUsecase "github.com/SlavaShagalov/slavello/internal/cards/usecase"
+	listsDel "github.com/SlavaShagalov/slavello/internal/lists/delivery/http"
+	listsRepository "github.com/SlavaShagalov/slavello/internal/lists/repository/postgres"
 	mw "github.com/SlavaShagalov/slavello/internal/middleware"
 	pHasher "github.com/SlavaShagalov/slavello/internal/pkg/hasher/bcrypt"
 	pLog "github.com/SlavaShagalov/slavello/internal/pkg/log/zap"
@@ -95,10 +99,12 @@ func main() {
 	var workspacesRepo workspaces.Repository
 	var boardsRepo boards.Repository
 	var cardsRepo cards.Repository
+	var listsRepo lists.Repository
 	usersRepo = usersRepository.New(db, logger)
 	workspacesRepo = workspacesRepository.New(db, logger)
 	boardsRepo = boardsRepository.New(db, logger)
 	cardsRepo = cardsRepository.New(db, logger)
+	listsRepo = listsRepository.New(db, logger)
 
 	sessionsRepo := sessionsRepository.New(redisClient, context.Background(), logger)
 
@@ -110,6 +116,7 @@ func main() {
 	workspacesUC := workspacesUsecase.New(workspacesRepo)
 	boardsUC := boardsUsecase.New(boardsRepo)
 	cardsUC := cardsUsecase.New(cardsRepo)
+	listsUC := listsUsecase.New(listsRepo)
 
 	router := mux.NewRouter()
 
@@ -124,6 +131,7 @@ func main() {
 	workspacesDel.RegisterHandlers(router, workspacesUC, boardsUC, logger, checkAuth)
 	cardsDel.RegisterHandlers(router, cardsUC, logger, checkAuth)
 	boardsDel.RegisterHandlers(router, boardsUC, logger, checkAuth)
+	listsDel.RegisterHandlers(router, listsUC, cardsUC, logger, checkAuth)
 
 	server := http.Server{
 		Addr:    ":" + viper.GetString(config.ServerPort),
