@@ -130,7 +130,7 @@ func (del *delivery) listByBoard(w http.ResponseWriter, r *http.Request) {
 
 	response := listResponse{Lists: make([]itemResponse, len(lists))}
 
-	for i, _ := range lists {
+	for i := range lists {
 		response.Lists[i].ID = lists[i].ID
 		response.Lists[i].BoardID = lists[i].BoardID
 		response.Lists[i].Title = lists[i].Title
