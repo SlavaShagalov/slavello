@@ -42,7 +42,8 @@ const Navbar: React.FC = () => {
         <img src="/assets/Logo.svg" alt="Logo" className="rounded-lg"/>
       </Link>
       <Link to={"/settings"}>
-        <img className='w-8 h-8' src={data.avatar} alt="Settings" />
+        {/* <img className='w-8 h-8' src={data.avatar} alt="Settings" /> */}
+        <img className='w-8 h-8' src="/assets/Avatar.png" alt="Settings" />
       </Link>
     </div >
   );
