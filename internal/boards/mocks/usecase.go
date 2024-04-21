@@ -8,6 +8,7 @@ import (
 	context "context"
 	reflect "reflect"
 
+	boards "github.com/SlavaShagalov/slavello/internal/boards"
 	models "github.com/SlavaShagalov/slavello/internal/models"
 	gomock "github.com/golang/mock/gomock"
 )
@@ -35,6 +36,80 @@ func (m *MockUsecase) EXPECT() *MockUsecaseMockRecorder {
 	return m.recorder
 }
 
+// Create mocks base method.
+func (m *MockUsecase) Create(ctx context.Context, params *boards.CreateParams) (models.Board, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Create", ctx, params)
+	ret0, _ := ret[0].(models.Board)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Create indicates an expected call of Create.
+func (mr *MockUsecaseMockRecorder) Create(ctx, params interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockUsecase)(nil).Create), ctx, params)
+}
+
+// Delete mocks base method.
+func (m *MockUsecase) Delete(ctx context.Context, id int) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Delete", ctx, id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Delete indicates an expected call of Delete.
+func (mr *MockUsecaseMockRecorder) Delete(ctx, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockUsecase)(nil).Delete), ctx, id)
+}
+
+// FullUpdate mocks base method.
+func (m *MockUsecase) FullUpdate(ctx context.Context, params *boards.FullUpdateParams) (models.Board, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FullUpdate", ctx, params)
+	ret0, _ := ret[0].(models.Board)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FullUpdate indicates an expected call of FullUpdate.
+func (mr *MockUsecaseMockRecorder) FullUpdate(ctx, params interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FullUpdate", reflect.TypeOf((*MockUsecase)(nil).FullUpdate), ctx, params)
+}
+
+// Get mocks base method.
+func (m *MockUsecase) Get(ctx context.Context, id int) (models.Board, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Get", ctx, id)
+	ret0, _ := ret[0].(models.Board)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Get indicates an expected call of Get.
+func (mr *MockUsecaseMockRecorder) Get(ctx, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockUsecase)(nil).Get), ctx, id)
+}
+
+// ListByTitle mocks base method.
+func (m *MockUsecase) ListByTitle(ctx context.Context, title string, userID int) ([]models.Board, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListByTitle", ctx, title, userID)
+	ret0, _ := ret[0].([]models.Board)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListByTitle indicates an expected call of ListByTitle.
+func (mr *MockUsecaseMockRecorder) ListByTitle(ctx, title, userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListByTitle", reflect.TypeOf((*MockUsecase)(nil).ListByTitle), ctx, title, userID)
+}
+
 // ListByWorkspace mocks base method.
 func (m *MockUsecase) ListByWorkspace(ctx context.Context, workspaceID int) ([]models.Board, error) {
 	m.ctrl.T.Helper()
@@ -48,4 +123,19 @@ func (m *MockUsecase) ListByWorkspace(ctx context.Context, workspaceID int) ([]m
 func (mr *MockUsecaseMockRecorder) ListByWorkspace(ctx, workspaceID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListByWorkspace", reflect.TypeOf((*MockUsecase)(nil).ListByWorkspace), ctx, workspaceID)
+}
+
+// PartialUpdate mocks base method.
+func (m *MockUsecase) PartialUpdate(ctx context.Context, params *boards.PartialUpdateParams) (models.Board, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "PartialUpdate", ctx, params)
+	ret0, _ := ret[0].(models.Board)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// PartialUpdate indicates an expected call of PartialUpdate.
+func (mr *MockUsecaseMockRecorder) PartialUpdate(ctx, params interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PartialUpdate", reflect.TypeOf((*MockUsecase)(nil).PartialUpdate), ctx, params)
 }

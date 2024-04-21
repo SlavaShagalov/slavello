@@ -23,6 +23,9 @@ var (
 	// Workspaces
 	ErrWorkspaceNotFound = errors.New("workspace not found")
 
+	// Boards
+	ErrBoardNotFound = errors.New("board not found")
+
 	// Lists
 	ErrTooLongListTitle       = fmt.Errorf("list title must be no more than %d characters", constants.MaxListTitleLen)
 	ErrTooLongListDescription = fmt.Errorf("list description must be no more than %d characters", constants.MaxListDescriptionLen)
