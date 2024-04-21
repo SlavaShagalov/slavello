@@ -4,7 +4,7 @@ package http
 
 import (
 	json "encoding/json"
-	models "github.com/SlavaShagalov/my-trello-backend/internal/models"
+	models "github.com/SlavaShagalov/slavello/internal/models"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -18,7 +18,7 @@ var (
 	_ easyjson.Marshaler
 )
 
-func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp(in *jlexer.Lexer, out *partialUpdateRequest) {
+func easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp(in *jlexer.Lexer, out *partialUpdateRequest) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -77,7 +77,7 @@ func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp(out *jwriter.Writer, in partialUpdateRequest) {
+func easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp(out *jwriter.Writer, in partialUpdateRequest) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -114,27 +114,27 @@ func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 // MarshalJSON supports json.Marshaler interface
 func (v partialUpdateRequest) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp(&w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v partialUpdateRequest) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp(w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *partialUpdateRequest) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp(&r, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *partialUpdateRequest) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp(l, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp(l, v)
 }
-func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp1(in *jlexer.Lexer, out *listSimpleResponse) {
+func easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp1(in *jlexer.Lexer, out *listSimpleResponse) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -170,7 +170,7 @@ func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 				}
 				for !in.IsDelim(']') {
 					var v1 models.List
-					easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalModels(in, &v1)
+					easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalModels(in, &v1)
 					out.Lists = append(out.Lists, v1)
 					in.WantComma()
 				}
@@ -186,7 +186,7 @@ func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp1(out *jwriter.Writer, in listSimpleResponse) {
+func easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp1(out *jwriter.Writer, in listSimpleResponse) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -201,7 +201,7 @@ func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 				if v2 > 0 {
 					out.RawByte(',')
 				}
-				easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalModels(out, v3)
+				easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalModels(out, v3)
 			}
 			out.RawByte(']')
 		}
@@ -212,27 +212,27 @@ func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 // MarshalJSON supports json.Marshaler interface
 func (v listSimpleResponse) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp1(&w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp1(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v listSimpleResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp1(w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp1(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *listSimpleResponse) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp1(&r, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp1(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *listSimpleResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp1(l, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp1(l, v)
 }
-func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalModels(in *jlexer.Lexer, out *models.List) {
+func easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalModels(in *jlexer.Lexer, out *models.List) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -277,7 +277,7 @@ func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalModels(i
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalModels(out *jwriter.Writer, in models.List) {
+func easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalModels(out *jwriter.Writer, in models.List) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -313,7 +313,7 @@ func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalModels(o
 	}
 	out.RawByte('}')
 }
-func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp2(in *jlexer.Lexer, out *listResponse) {
+func easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp2(in *jlexer.Lexer, out *listResponse) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -365,7 +365,7 @@ func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp2(out *jwriter.Writer, in listResponse) {
+func easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp2(out *jwriter.Writer, in listResponse) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -391,27 +391,27 @@ func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 // MarshalJSON supports json.Marshaler interface
 func (v listResponse) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp2(&w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp2(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v listResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp2(w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp2(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *listResponse) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp2(&r, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp2(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *listResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp2(l, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp2(l, v)
 }
-func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp3(in *jlexer.Lexer, out *itemResponse) {
+func easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp3(in *jlexer.Lexer, out *itemResponse) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -463,7 +463,7 @@ func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 				}
 				for !in.IsDelim(']') {
 					var v7 models.Card
-					easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalModels1(in, &v7)
+					easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalModels1(in, &v7)
 					out.Cards = append(out.Cards, v7)
 					in.WantComma()
 				}
@@ -479,7 +479,7 @@ func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp3(out *jwriter.Writer, in itemResponse) {
+func easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp3(out *jwriter.Writer, in itemResponse) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -524,7 +524,7 @@ func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 				if v8 > 0 {
 					out.RawByte(',')
 				}
-				easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalModels1(out, v9)
+				easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalModels1(out, v9)
 			}
 			out.RawByte(']')
 		}
@@ -535,27 +535,27 @@ func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 // MarshalJSON supports json.Marshaler interface
 func (v itemResponse) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp3(&w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp3(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v itemResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp3(w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp3(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *itemResponse) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp3(&r, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp3(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *itemResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp3(l, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp3(l, v)
 }
-func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalModels1(in *jlexer.Lexer, out *models.Card) {
+func easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalModels1(in *jlexer.Lexer, out *models.Card) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -602,7 +602,7 @@ func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalModels1(
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalModels1(out *jwriter.Writer, in models.Card) {
+func easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalModels1(out *jwriter.Writer, in models.Card) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -643,7 +643,7 @@ func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalModels1(
 	}
 	out.RawByte('}')
 }
-func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp4(in *jlexer.Lexer, out *getResponse) {
+func easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp4(in *jlexer.Lexer, out *getResponse) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -688,7 +688,7 @@ func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp4(out *jwriter.Writer, in getResponse) {
+func easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp4(out *jwriter.Writer, in getResponse) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -728,27 +728,27 @@ func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 // MarshalJSON supports json.Marshaler interface
 func (v getResponse) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp4(&w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp4(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v getResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp4(w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp4(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *getResponse) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp4(&r, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp4(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *getResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp4(l, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp4(l, v)
 }
-func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp5(in *jlexer.Lexer, out *createResponse) {
+func easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp5(in *jlexer.Lexer, out *createResponse) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -793,7 +793,7 @@ func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp5(out *jwriter.Writer, in createResponse) {
+func easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp5(out *jwriter.Writer, in createResponse) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -833,27 +833,27 @@ func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 // MarshalJSON supports json.Marshaler interface
 func (v createResponse) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp5(&w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp5(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v createResponse) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp5(w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp5(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *createResponse) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp5(&r, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp5(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *createResponse) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp5(l, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp5(l, v)
 }
-func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp6(in *jlexer.Lexer, out *createRequest) {
+func easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp6(in *jlexer.Lexer, out *createRequest) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -884,7 +884,7 @@ func easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp6(out *jwriter.Writer, in createRequest) {
+func easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp6(out *jwriter.Writer, in createRequest) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -899,23 +899,23 @@ func easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDel
 // MarshalJSON supports json.Marshaler interface
 func (v createRequest) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp6(&w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp6(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v createRequest) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp6(w, v)
+	easyjsonD2b7633eEncodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp6(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *createRequest) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp6(&r, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp6(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *createRequest) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeGithubComSlavaShagalovMyTrelloBackendInternalListsDeliveryHttp6(l, v)
+	easyjsonD2b7633eDecodeGithubComSlavaShagalovSlavelloInternalListsDeliveryHttp6(l, v)
 }
